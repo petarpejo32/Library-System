@@ -53,9 +53,7 @@ namespace LibrarySystem.Tests.UI.ExternalBooks
             await Page.GotoAsync($"{BaseUrl}/ExternalBooks/Search");
             await Page.FillAsync("input[name='query'], #query", "The Great Gatsby");
             await Page.ClickAsync("input[type='submit'], button[type='submit']");
-            // Wait for page to load after search
             await Page.WaitForLoadStateAsync();
-            // Page should still be on ExternalBooks - either results or same page
             await Expect(Page).ToHaveURLAsync(new Regex(".*/ExternalBooks/.*"));
         }
 
@@ -66,7 +64,6 @@ namespace LibrarySystem.Tests.UI.ExternalBooks
             await Page.FillAsync("input[name='query'], #query", "xyznonexistentbook123456");
             await Page.ClickAsync("input[type='submit'], button[type='submit']");
             await Page.WaitForLoadStateAsync();
-            // Should not crash - stays on ExternalBooks page
             await Expect(Page).ToHaveURLAsync(new Regex(".*/ExternalBooks/.*"));
         }
        
@@ -74,7 +71,6 @@ namespace LibrarySystem.Tests.UI.ExternalBooks
         public async Task Test08_ExternalBooksSearch_PageHasNavigation()
         {
             await Page.GotoAsync($"{BaseUrl}/ExternalBooks/Search");
-            // Should have nav links back to other parts of app
             var navLinks = await Page.Locator("nav a, .navbar a").CountAsync();
             Assert.That(navLinks, Is.GreaterThan(0));
         }
@@ -83,7 +79,6 @@ namespace LibrarySystem.Tests.UI.ExternalBooks
         public async Task Test09_ExternalBooksSearch_CanNavigateToBooks()
         {
             await Page.GotoAsync($"{BaseUrl}/ExternalBooks/Search");
-            // Navigate to Books from here
             await Page.GotoAsync($"{BaseUrl}/Books");
             await Expect(Page).ToHaveURLAsync(new Regex(".*/Books.*"));
         }
