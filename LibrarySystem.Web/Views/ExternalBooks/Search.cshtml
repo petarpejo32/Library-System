@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Search External Books";
+}
+
+<h1>Search Books from Open Library</h1>
+<hr />
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["InfoMessage"] != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        @TempData["InfoMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Search for Books</h5>
+                <p class="card-text">Search the Open Library database to find and import books into your library system.</p>
+
+                <form asp-action="Search" method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" name="query" class="form-control" placeholder="Enter book title, author, or ISBN..." required />
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                    </div>
+                </form>
+
+                <div class="alert alert-secondary">
+                    <strong>Examples:</strong>
+                    <ul class="mb-0">
+                        <li>Search by title: "Harry Potter"</li>
+                        <li>Search by author: "George Orwell"</li>
+                        <li>Search by ISBN: "978-0451524935"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a asp-controller="Books" asp-action="Index" class="btn btn-secondary">Back to Books</a>
+</div>

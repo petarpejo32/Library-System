@@ -1,0 +1,59 @@
+﻿@model List<LibrarySystem.Domain.DTOs.OpenLibraryBookDTO>
+
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<h1>Search Results</h1>
+<hr />
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<p class="lead">Found @Model.Count book(s)</p>
+
+<div class="row">
+    @foreach (var book in Model)
+    {
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@book.Title</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">by @book.AuthorName</h6>
+
+                    <dl class="row mt-3">
+                        <dt class="col-sm-4">ISBN:</dt>
+                        <dd class="col-sm-8">@book.ISBN</dd>
+
+                        <dt class="col-sm-4">Published:</dt>
+                        <dd class="col-sm-8">@(book.FirstPublishYear?.ToString() ?? "N/A")</dd>
+
+                        <dt class="col-sm-4">Genre:</dt>
+                        <dd class="col-sm-8">@book.Genre</dd>
+                    </dl>
+                </div>
+                <div class="card-footer">
+                    <a asp-action="ImportBook"
+                       asp-route-title="@book.Title"
+                       asp-route-author="@book.AuthorName"
+                       asp-route-isbn="@book.ISBN"
+                       asp-route-year="@book.FirstPublishYear"
+                       asp-route-genre="@book.Genre"
+                       class="btn btn-success btn-sm">
+                        <i class="bi bi-download"></i> Import to Library
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="mt-4">
+    <a asp-action="Search" class="btn btn-primary">New Search</a>
+    <a asp-controller="Books" asp-action="Index" class="btn btn-secondary">Back to Books</a>
+</div>

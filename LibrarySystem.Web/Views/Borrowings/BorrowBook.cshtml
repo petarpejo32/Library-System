@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Borrow Book";
+}
+
+<h1>Borrow a Book</h1>
+
+<hr />
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="BorrowBook" method="post">
+            <div class="form-group mb-3">
+                <label for="BookId" class="control-label">Select Book</label>
+                <select name="BookId" class="form-control" asp-items="ViewBag.BookId">
+                    <option value="">-- Select a Book --</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="MemberId" class="control-label">Select Member</label>
+                <select name="MemberId" class="form-control" asp-items="ViewBag.MemberId">
+                    <option value="">-- Select a Member --</option>
+                </select>
+            </div>
+
+            <div class="alert alert-info">
+                <strong>Loan Period:</strong> 14 days<br />
+                <strong>Late Fee:</strong> $1.00 per day
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Borrow Book" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,73 @@
+﻿@model LibrarySystem.Domain.Models.Borrowing
+@{
+    ViewData["Title"] = "Borrowing Details";
+}
+
+<h1>Borrowing Details</h1>
+
+<div>
+    <h4>Borrowing Information</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Book</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Title) by @Html.DisplayFor(model => model.Book.Author.Name)
+        </dd>
+
+        <dt class="col-sm-2">Member</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Member.Name)
+        </dd>
+
+        <dt class="col-sm-2">Borrow Date</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BorrowDate)
+        </dd>
+
+        <dt class="col-sm-2">Due Date</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DueDate)
+        </dd>
+
+        <dt class="col-sm-2">Return Date</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ReturnDate)
+        </dd>
+
+        <dt class="col-sm-2">Status</dt>
+        <dd class="col-sm-10">
+            @if (Model.IsReturned)
+            {
+                <span class="badge bg-success">Returned</span>
+            }
+            else
+            {
+                <span class="badge bg-warning">Active</span>
+            }
+        </dd>
+
+        <dt class="col-sm-2">Fine</dt>
+        <dd class="col-sm-10">
+            $@Html.DisplayFor(model => model.Fine)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    @if (!Model.IsReturned)
+    {
+        <a asp-action="ReturnBook" asp-route-id="@Model.Id" class="btn btn-success">Return Book</a>
+        <span class="text-muted">|</span>
+    }
+    else
+    {
+        <span class="badge bg-success">Book Already Returned</span>
+        @if (Model.Fine > 0)
+        {
+            <span class="badge bg-warning">Fine: $@Model.Fine.ToString("F2")</span>
+        }
+        <span class="text-muted">|</span>
+    }
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

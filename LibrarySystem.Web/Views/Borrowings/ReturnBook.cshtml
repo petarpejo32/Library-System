@@ -1,0 +1,74 @@
+﻿@model LibrarySystem.Web.ViewModels.ReturnBookViewModel
+
+@{
+    ViewData["Title"] = "Return Book";
+}
+
+<h1>Return Book</h1>
+<hr />
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <h4>Borrowing Details</h4>
+        <dl class="row">
+            <dt class="col-sm-3">Book</dt>
+            <dd class="col-sm-9">@Model.BookTitle by @Model.AuthorName</dd>
+
+            <dt class="col-sm-3">Member</dt>
+            <dd class="col-sm-9">@Model.MemberName</dd>
+
+            <dt class="col-sm-3">Borrow Date</dt>
+            <dd class="col-sm-9">@Model.Borrowing.BorrowDate.ToString("MMMM dd, yyyy")</dd>
+
+            <dt class="col-sm-3">Due Date</dt>
+            <dd class="col-sm-9">
+                @Model.Borrowing.DueDate.ToString("MMMM dd, yyyy")
+                @if (Model.IsOverdue)
+                {
+                    <span class="badge bg-danger">OVERDUE</span>
+                }
+                else if (Model.DaysUntilDue <= 3 && Model.DaysUntilDue >= 0)
+                {
+                    <span class="badge bg-warning">Due Soon</span>
+                }
+            </dd>
+        </dl>
+
+        @if (Model.IsOverdue)
+        {
+            <div class="alert alert-warning">
+                <h5><i class="bi bi-exclamation-triangle"></i> Overdue Notice</h5>
+                <p>This book is <strong>@Model.DaysOverdue days</strong> overdue.</p>
+                <p>Estimated fine: <strong>$@Model.EstimatedFine.ToString("F2")</strong></p>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-success">
+                <p>This book is being returned on time. No fine will be charged.</p>
+            </div>
+        }
+
+        <form asp-action="ReturnBookConfirmed" method="post">
+            <input type="hidden" name="id" value="@Model.Borrowing.Id" />
+            <div class="form-group">
+                <input type="submit" value="Confirm Return" class="btn btn-success btn-lg" />
+                <a asp-action="Details" asp-route-id="@Model.Borrowing.Id" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
