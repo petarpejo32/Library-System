@@ -1,10 +1,9 @@
 # Library Management System
 
 ASP.NET Core web application for managing library operations including books, authors, members, and borrowings.
-###Документација(https://github.com/user-attachments/files/25140400/Library.Management.System.-.pdf)
+###[Документација](https://github.com/user-attachments/files/25140412/Library.Management.System.-.pdf)
 
-
-## Academic Projects
+## University Project For:
 
 ### 1. Integrated Systems (IS)
 - **System:** Full-stack Library Management System
