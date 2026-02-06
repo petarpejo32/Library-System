@@ -1,7 +1,8 @@
 # Library Management System
 
 ASP.NET Core web application for managing library operations including books, authors, members, and borrowings.
-## Documentation for SKIT: [Library Management System - СКИТ.pdf](https://github.com/user-attachments/files/25140285/Library.Management.System.-.pdf)
+###Документација(https://github.com/user-attachments/files/25140400/Library.Management.System.-.pdf)
+
 
 ## Academic Projects
 
